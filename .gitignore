@@ -1,4 +1,5 @@
 
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,node,react
 
@@ -145,15 +146,16 @@ dist
 **/*.backup.*
 **/*.back.*
 
-node_modules
-
 *.sublime*
 
 psd
 thumb
 sketch
 
-/node_modules
 /config
+/node_modules
+
+config/
+node_modules/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,react
