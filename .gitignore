@@ -155,6 +155,5 @@ sketch
 
 /node_modules
 /config
-/server
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,react
