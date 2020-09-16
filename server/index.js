@@ -21,6 +21,7 @@ mongoose.connect(config.mongoURI, {
 // uers / favorite 경로 지정
 app.use('/api/users', require('./routes/users'));
 app.use('/api/favorite', require('./routes/favorite'));
+app.use('/api/comment', require('./routes/comment'));
 
 const port = 5000
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

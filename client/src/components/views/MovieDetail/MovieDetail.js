@@ -9,11 +9,14 @@ import MovieInfo from './Sections/MovieInfo';
 import GridCards from '../commons/GridCards';
 import {Row,Button} from 'antd';
 import Favorite from './Sections/Favorite'
+import Comment from './Sections/Comment';
+import Axios from 'axios';
 
 function MovieDetail(props) {
     const [Movie, setMovie] = useState([]);
     const [Casts,setCasts] = useState([]);
     const [ActorToggle, setActorToggle] = useState(false);
+    const [Comments, setComments] = useState([]);
 
     let movieId = props.match.params.movieId; // 하위 컴포넌트에서 URL에 접근한 값을 빼는 방법! (props,match 이용)
     let endpointCrew = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
@@ -31,14 +34,32 @@ function MovieDetail(props) {
         .then(response => {
             setCasts(response.cast);
         })
+        const variable = {
+            movieId : movieId
+        }
+
+        Axios.post('/api/comment/getComment', variable)
+        .then(response => {
+            if(response.data.success){
+                console.log('response.data.comments',response.data.comments);
+                setComments(response.data.comments);
+            }else{
+                alert("comment list 정보를 가져오는데 실패했습니다.")
+            }
+        });
     },[]);
+    //console.log('CCC',Comments);
+
+    const refreshFunction = (newComments)=>{
+        console.log('regreshFunction');
+        setComments(Comments.concat(newComments));
+    }
 
     const toggleActorView = () => {
         setActorToggle(!ActorToggle);
     }
     return (
         <div>
-
             {/* Header */}
             <MainImage
                  image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
@@ -75,6 +96,9 @@ function MovieDetail(props) {
                             ))}
                         </Row>
                 }
+            </div>
+            <div>
+                <Comment {...props} comments={Comments} refreshFunction={refreshFunction}/>
             </div>
         </div>
     );
